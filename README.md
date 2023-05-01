@@ -14,7 +14,12 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
-3. Run the app.
+3. Apply migrations.
+```
+python manage.py migrate
+```
+
+4. Run the app.
 ```
 python manage.py runserver
 ```
