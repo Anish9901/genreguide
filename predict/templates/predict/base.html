@@ -2,28 +2,38 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Hey there!!</title>
+        <title>Genre Guide</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="{% static 'predict/css/style.css' %}">
     </head>
     <!-- <body style="background-color: rgb(31, 28, 28);"> -->
-    <body>
+    <body style="background-color: #121212;">
         
         <div class="container">
             <div class = "headline">
-                <h1>Genre Guide</h1>
+                <h1 style="color: white;">Genre Guide</h1>
             </div>
             <div class="card">
                 <h3>Upload music file</h3>
                 <div class="drop_box">
-                    <header>
-                        <h4>Select File here</h4>
+                    <header id="header">
+                        <h4 style="color: white;">Select File here</h4>
                     </header>
-                    <p>Files Supported: .wav, .mp3</p>
-                    <input type="file" accept=".wav, .mp3" id="fileID" style="display:none;">
+                    <p id = "support">Files Supported: .wav, .mp3</p>
+                    <div>
+                        <form enctype="multipart/form-data" action = "{% url 'prediction' %}" method="post" id = "file_submit">
+                            <input type="file" accept=".wav, .mp3" id="fileID" name = 'doc' style="display:none;">
+                            <!-- <button type ="menu" id="b1" class="btn">Choose File</button> -->
+                            <div id = "b1">
+                                <label for="fileID" class="btn">Choose File</label> 
+                            </div>
+                            <!-- <button id="b2" type="submit" class="btn" disabled>Upload</button> -->
+                        </form>
+                    </div>
+                    <!-- <input type="file" accept=".wav, .mp3" id="fileID" name = 'doc' style="display:none;"> -->
                     <!-- <label for="fileID" class="btn">Choose File</label> -->
-                    <button class="btn">Choose File</button>
+                    <!-- <button class="btn">Choose File</button> -->
                 </div>
             </div>
         </div>

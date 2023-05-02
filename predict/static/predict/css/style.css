@@ -15,7 +15,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #fcfcfc;
+  
 }
 
 .headline {
@@ -27,7 +27,7 @@
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
   width: 600px;
   height: 260px;
-  background-color: #ffffff;
+  background-color: rgb(43, 43, 43);
   padding: 10px 30px 40px;
   display: inline;
 }
@@ -35,7 +35,7 @@
 .card h3 {
   font-size: 22px;
   font-weight: 600;
-  
+  color: white;
 }
 
 .drop_box {
@@ -64,7 +64,7 @@
 
 .btn {
   text-decoration: none;
-  background-color: #005af0;
+  background-color: #1da04b;
   color: #ffffff;
   padding: 10px 20px;
   border: none;
@@ -75,17 +75,21 @@
 .btn:hover{
   text-decoration: none;
   background-color: #ffffff;
-  color: #005af0;
+  color: #1da04b;
   padding: 10px 20px;
   border: none;
   outline: 1px solid #010101;
 }
-.form input {
+.form {
   margin: 10px 0;
   width: 100%;
-  background-color: #e2e2e2;
+  /* background-color: #e2e2e2; */
   border: none;
   outline: none;
   padding: 12px 20px;
   border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }

@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Result</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'predict/css/style.css' %}">
+    </head>
+    <body style="background-color: #121212;">
+        <div class="container">
+            <div class="card" style="background-color: rgb(43, 43, 43);">
+                <div class="form">
+                    <h1 style="color: rgb(255, 255, 255);">Your music's genre is</h1>
+                    <h2 style="color: rgb(209, 208, 208); padding-top: 20px; padding-bottom: 20px;">{{genre}}</h2>
+                    <a href="{% url 'index' %}">
+                        <button class = 'btn'>
+                            Classify another audio file
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

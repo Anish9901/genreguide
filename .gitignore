@@ -1,7 +1,10 @@
 # Byte-compiled / optimized / DLL files
 __pycache__
 *.py[cod]
-
+env/
+dataset/
+.ipynb_checkpoints/
+db.sqlite3
 # C extensions
 *.so
 
