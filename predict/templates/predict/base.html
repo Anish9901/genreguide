@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Hey there!!</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'predict/css/style.css' %}">
+    </head>
+    <!-- <body style="background-color: rgb(31, 28, 28);"> -->
+    <body>
+        
+        <div class="container">
+            <div class = "headline">
+                <h1>Genre Guide</h1>
+            </div>
+            <div class="card">
+                <h3>Upload music file</h3>
+                <div class="drop_box">
+                    <header>
+                        <h4>Select File here</h4>
+                    </header>
+                    <p>Files Supported: .wav, .mp3</p>
+                    <input type="file" accept=".wav, .mp3" id="fileID" style="display:none;">
+                    <!-- <label for="fileID" class="btn">Choose File</label> -->
+                    <button class="btn">Choose File</button>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="{% static 'predict/js/base.js' %}"></script>
+</html>
+<!-- <h1>Hello World!!!</h1>
+        <form action = "">
+            <label for="music_file" class="btn btn-primary">Upload music file</label>
+            <input type = "file" id="music_file" accept=".wav, .mp3" style="visibility: hidden;">
+        <div>
+            <input type = "submit">
+        </div>
+        </form> -->
