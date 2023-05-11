@@ -9,15 +9,13 @@ import librosa
 import csv
 import pickle
 
-path = f'/home/anish/oss/project'
+path = os.getcwd()
 
 def predictor(csv_path):
     features = pd.read_csv(csv_path)
     with open(f'{path}/model.pkl','rb') as f:
         model = pickle.load(f)
     scaled_features = model['scaler'].transform(features)
-    #min_max_scaler = preprocessing.MinMaxScaler()
-    #features = min_max_scaler.transform(X)
     pred = model['svm'].predict(scaled_features)
     return pred[0]
 
@@ -27,77 +25,84 @@ class Features:
         self.sr = sr
     
     def get_chroma_stft(self):
+        # Chroma features represent the distribution of energy in different pitch classes.
         chroma_stft = librosa.feature.chroma_stft(y=self.y, sr=self.sr)
         chroma_stft_mean = np.mean(chroma_stft)
         chroma_stft_var = np.var(chroma_stft)
         return chroma_stft_mean, chroma_stft_var
 
     def get_rms(self):
+        # RMS energy is the root mean square of the amplitude of the audio signal.
+        # It is a measure of the average energy of the signal.
         rms = librosa.feature.rms(y=self.y)
         rms_mean = np.mean(rms)
         rms_var = np.var(rms)
         return rms_mean, rms_var
 
     def get_spectral_centroid(self):
+        # Spectral centroid is the weighted average of the frequencies present in the signal, 
+        # with their magnitudes as the weights. It is a measure of the brightness of the signal. 
         spectral_centroid = librosa.feature.spectral_centroid(y=self.y, sr=self.sr)[0]
         spectral_centroid_mean = np.mean(spectral_centroid)
         spectral_centroid_var = np.var(spectral_centroid)
         return spectral_centroid_mean, spectral_centroid_var
 
     def get_spectral_bandwidth(self):
+        # Spectral bandwidth is a measure of the width of the frequency range over which the energy is distributed. 
+        # It is a measure of the spread of the signal.
         spectral_bandwidth = librosa.feature.spectral_bandwidth(y=self.y, sr=self.sr)
         spectral_bandwidth_mean = np.mean(spectral_bandwidth)
         spectral_bandwidth_var = np.var(spectral_bandwidth)
         return spectral_bandwidth_mean, spectral_bandwidth_var
 
     def get_rolloff(self):
+        # Spectral rolloff is the frequency below which a specified percentage of the total spectral energy lies. 
+        # It is a measure of the shape of the signal. 
         rolloff = librosa.feature.spectral_rolloff(y=self.y+0.01, sr=self.sr)[0]
         rolloff_mean = np.mean(rolloff)
         rolloff_var = np.var(rolloff)
         return rolloff_mean, rolloff_var
 
     def get_zero_crossing_rate(self):
+        # Zero crossing rate is the rate at which the signal changes sign.
+        # It is a measure of the number of times the signal crosses the zero-axis.
         zero_crossing_rate = librosa.feature.zero_crossing_rate(self.y)
         zero_crossing_rate_mean = np.mean(zero_crossing_rate)
         zero_crossing_rate_var = np.var(zero_crossing_rate)
         return zero_crossing_rate_mean, zero_crossing_rate_var
 
     def get_harmony(self):
+        # Harmony is simultaneously occurring frequencies, pitches, or chords.
         harmony = librosa.effects.harmonic(self.y)
         harmony_mean = np.mean(harmony)
         harmony_var = np.var(harmony)
         return harmony_mean, harmony_var
 
     def get_perceptr(self):
+        # The pecussive elements of the signal.
         perceptr = librosa.effects.percussive(self.y)
         perceptr_mean = np.mean(perceptr)
         perceptr_var = np.var(perceptr)
         return perceptr_mean, perceptr_var
 
     def get_tempo(self):
+        # Tempo is the speed or pace of the music. It is measured in beats per minute (BPM).
         y_harmonic, y_percussive = librosa.effects.hpss(self.y)
         tempo, _ = librosa.beat.beat_track(y=y_percussive)
         return tempo
 
     def get_mfcc(self):
-        # Define MFCC parameters
-        n_mfcc = 20    # Number of MFCC coefficients to calculate
-        #hop_length = 512   # Hop length between consecutive frames in samples (around 23ms)
-        #n_fft = 2048   # Size of FFT window in samples (around 93ms)
+        # These represent the shape of the spectral envelope of a signal.
+        n_mfcc = 20 # Number of MFCC coefficients to calculate depending on the training dataset
 
         # Extract MFCC features
-        mfccs = librosa.feature.mfcc(y=self.y, sr=self.sr)#, n_mfcc=n_mfcc, hop_length=hop_length, n_fft=n_fft)
+        mfccs = librosa.feature.mfcc(y=self.y, sr=self.sr)
 
         # Aggregate MFCC features into a single feature vector
-        #mfcc_mean = np.mean(mfccs)
-        #mfcc_var = np.var(mfccs)
         mfcc_features = _format_mfcc(n_mfcc, mfccs)
-        #mfcc_features = (mfcc_features - np.mean(mfcc_features)) / np.std(mfcc_features)
         return mfcc_features
 
 def _format_mfcc(n_mfcc, mfccs):
-    #print(f"mfccs={len(mfccs)}")
-    #print(f"type(mfccs)= {type(mfccs)}")
     mfcc_features = []
     for i in range(n_mfcc):
         mfcc_features.append(np.mean(mfccs[i]))
